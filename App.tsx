@@ -8,13 +8,20 @@ import TodoList from './components/TodoList';
 import AddListModal from './components/AddListModal';
 
 export default function App () {
-  const [addTodoVisible, setAddTodoVisible] = React.useState(false);
-  
-  function toggleAddTodoModal  ()  {
-    setAddTodoVisible(!addTodoVisible);
-  }
+    const [addTodoVisible, setAddTodoVisible] = React.useState(false);
+    
+    function toggleAddTodoModal  ()  {
+      setAddTodoVisible(!addTodoVisible);
+    }
 
   
+    function renderList(lista: { id: number, name: string, color: string, todos: any[] }) {
+      return <TodoList id={lista.id}
+      name={lista.name} 
+      color={lista.color} 
+      todos={lista.todos} 
+      />;
+    }
     return (
       <View style={styles.container}>
           <Modal animationType='slide' visible= {addTodoVisible} onRequestClose={ () => toggleAddTodoModal() }> 
@@ -46,20 +53,15 @@ export default function App () {
               keyExtractor = {item => item.name}
               horizontal = {true}
               showsHorizontalScrollIndicator = {false}
-              renderItem = {({item}) => (
-                <TodoList
-                  id = {item.id}
-                  name = {item.name}
-                  color = {item.color}
-                  todos = {item.todos}
-                 /> 
-              )}
+              renderItem = {({item}) => 
+                renderList(item)
+              }
           >
           </FlatList>
         </View>
       </View>
     );
-  }
+}
 
 const styles = StyleSheet.create({
   container: {
