@@ -73,6 +73,7 @@ export default function App () {
               renderItem = {({item}) => 
                 renderList(item)
               }
+              keyboardShouldPersistTaps = 'always'
           >
           </FlatList>
         </View>

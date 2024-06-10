@@ -24,6 +24,7 @@ interface TodoModalProps {
 
 
 function TodoModalObject({ list, closeModal, updateList }: TodoModalProps) {
+    const [newTodo, setNewTodo] = React.useState("")
     const [ listName, setListName ] = React.useState(list.name);
     const [ listColor, setListColor ] = React.useState(list.color);
     const [ todos, setTodos ] = React.useState(list.todos);
@@ -55,7 +56,14 @@ function TodoModalObject({ list, closeModal, updateList }: TodoModalProps) {
 
     const insets = useSafeAreaInsets();
 
-    
+    function addTodo() {
+        let newList = { ...list };
+        newList.todos.push({ title: newTodo, completed: false });
+        setTodos(newList.todos);
+        setNewTodo("");
+        updateList(newList);
+    }
+
     return (
         <KeyboardAvoidingView style={{flex:1}} behavior="padding">
             <View style = { [styles.container, {    
@@ -93,8 +101,8 @@ function TodoModalObject({ list, closeModal, updateList }: TodoModalProps) {
                 </View>
 
                 <View style={[styles.section, styles.footer]} >
-                        <TextInput style ={[styles.input, {borderColor: listColor}]} />
-                            <TouchableOpacity style={[styles.addTodo, {backgroundColor: listColor}]}>
+                        <TextInput style ={[styles.input, {borderColor: listColor}]} onChangeText={text => setNewTodo(text)} value={newTodo} />
+                            <TouchableOpacity style={[styles.addTodo, {backgroundColor: listColor}]} onPress={() => addTodo() }>
                                 <AntDesign name="plus" size={16} color={colors.white}/>
                             </TouchableOpacity>
                 </View>
