@@ -28,11 +28,11 @@ interface TodoListType {
         <View>
             <View style = {{alignItems: "center"}}> 
                 <Text style = {styles.count}>{remainingCount}</Text>
-                <Text style = {styles.subtitle}>Remaining</Text>
+                <Text style = {styles.subtitle}>Restante</Text>
             </View>
             <View style = {{alignItems: "center"}}>
                 <Text style = {styles.count}>{completedCount}</Text>
-                <Text style = {styles.subtitle}>Completed</Text>
+                <Text style = {styles.subtitle}>Feito</Text>
             </View>
         </View>
     </View>
