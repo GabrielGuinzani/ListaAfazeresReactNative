@@ -6,9 +6,10 @@ import { tempData } from '../tempData';
 
 interface AddListModalProps {
   closeModal: () => void;
+  addList: (list: any) => void;
 }
 
-export default function AddListModal({ closeModal }: AddListModalProps) {
+export default function AddListModal({ closeModal, addList }: AddListModalProps) {
   const backgroundColors = ['#5CD859', '#24A6D9', '#595BD9', '#8022D9', '#D159D8', '#D85963', '#D88559'];
   const [nome, setNome] = React.useState('');
   const [corDeFundo, setCorDeFundo] = React.useState(backgroundColors[0]);
@@ -24,8 +25,8 @@ export default function AddListModal({ closeModal }: AddListModalProps) {
 
   const createTodo = () => {
     const newTodo = { id: tempData.length + 1, name: nome, color: corDeFundo, todos: [] };
-    tempData.push(newTodo);
-  
+    
+    addList(newTodo);
     setNome('');
     closeModal();
   }

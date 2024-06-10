@@ -14,9 +14,10 @@ interface TodoListType {
     name: string,
     color: string,
     todos: Todos[]
+    updateList: (list: any) => void;
 }
 
- const TodoList = ( {id, name,todos, color} : TodoListType) => {
+ const TodoList = ( {id, name,todos, color, updateList} : TodoListType) => {
     const [showListVisible, setShowListVisible] = React.useState(false);
     function toggleListModal() {
         setShowListVisible(!showListVisible);
@@ -29,7 +30,8 @@ interface TodoListType {
     <View>
         <Modal animationType='slide' visible= {showListVisible} onRequestClose={ () => toggleListModal()}>
 
-            <TodoModal list = {{ id, name, todos, color }} closeModal = {() => toggleListModal()} />
+            <TodoModal list = {{ id, name, todos, color }} closeModal = {() => toggleListModal()}  
+            updateList = {updateList}/>
                 
 
                 

@@ -7,25 +7,42 @@ import {tempData} from './tempData';
 import TodoList from './components/TodoList';
 import AddListModal from './components/AddListModal';
 
+interface List {
+  id: number;
+  name: string;
+  color: string;
+  todos: any[];
+}
+
 export default function App () {
     const [addTodoVisible, setAddTodoVisible] = React.useState(false);
-    
+    const [lists, setLists] = React.useState(tempData);
+
     function toggleAddTodoModal  ()  {
       setAddTodoVisible(!addTodoVisible);
     }
 
-  
-    function renderList(lista: { id: number, name: string, color: string, todos: any[] }) {
+
+    const addList = (list: List) => {
+      setLists([...lists, {...list, id: lists.length + 1, todos: [], }]);
+    };
+
+    const updateList = (list: List) => {
+      setLists(lists.map(item => item.id === list.id ? list : item));
+    }
+
+    function renderList(lista: List) {
       return <TodoList id={lista.id}
       name={lista.name} 
       color={lista.color} 
       todos={lista.todos} 
-      />;
+      updateList={updateList} />;
+  
     }
     return (
       <View style={styles.container}>
           <Modal animationType='slide' visible= {addTodoVisible} onRequestClose={ () => toggleAddTodoModal() }> 
-              <AddListModal closeModal = {() => toggleAddTodoModal()}/>
+              <AddListModal closeModal = {() => toggleAddTodoModal()} addList = {addList} />
           </Modal>
 
 
@@ -49,7 +66,7 @@ export default function App () {
 
         <View style= {{height: 275, paddingLeft: 32}}>
           <FlatList
-              data = {tempData}
+              data = {lists}
               keyExtractor = {item => item.name}
               horizontal = {true}
               showsHorizontalScrollIndicator = {false}
