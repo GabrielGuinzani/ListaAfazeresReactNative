@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput } from "react-native";
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import colors from "../colors";
 
 
@@ -30,8 +30,15 @@ function TodoModalObject({ list, closeModal }: TodoModalProps) {
     const completedCount = todos.filter((todo: { completed: boolean; }) => todo.completed).length;
     function renderTodo ({item} : {item: Todos}) {
         return (
-            <View>
-                <Text>{item.title}</Text>
+            <View style={styles.todoContainer}>
+                <TouchableOpacity>
+                    <Ionicons 
+                    name={item.completed ? "square": "square-outline"} 
+                    size={24} 
+                    color={colors.gray} 
+                    style={{width: 32}}/>
+                </TouchableOpacity>
+                <Text style= {[styles.todo, {textDecorationLine:item.completed ? "line-through":"none", color: item.completed ? colors.gray:colors.black}]}> {item.title}</Text>
             </View>
         );
     }
@@ -137,6 +144,16 @@ const styles = StyleSheet.create({
         padding: 16,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    todoContainer: {
+        paddingVertical: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    todo: {
+        color: colors.black,
+        fontWeight: '700',
+        fontSize: 16,
     },
 
 });
